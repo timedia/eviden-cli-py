@@ -9,6 +9,11 @@ BASE_URL = "https://etrack.timedia.co.jp/EasyTracker/"
 session = requests.session()
 
 AUTH_INVALID_MESSAGE = "ログインID、メールアドレスもしくはパスワードが間違っています"
+AUTH_PROPARTY_EMPTY_MESSAGE = "ログインIDかメールアドレス、パスワードを入力してください"
+
+def __check_login_success(html):
+    if html.find(AUTH_INVALID_MESSAGE) > -1 or html.find(AUTH_PROPARTY_EMPTY_MESSAGE) > -1:
+        sys.exit(AUTH_INVALID_MESSAGE+".ログインし直してください.")
 
 def login(user_id, password):
     PATH = "Login.aspx"
@@ -19,8 +24,7 @@ def login(user_id, password):
     params["textBoxPassword"] = password
 
     res = session.post(BASE_URL+PATH, data=params)
-    if res.text.find(AUTH_INVALID_MESSAGE) > -1:
-        sys.exit(AUTH_INVALID_MESSAGE)
+    __check_login_success(res.text)
 
     cookie = session.cookies.get("ASP.NET_SessionId")
     session_id = {"ASP.NET_SessionId": f"{cookie}"}
@@ -38,8 +42,7 @@ def __generate_html_with_session(path):
     cookies = status["session"]
 
     res = session.get(BASE_URL+path, cookies=cookies)
-    if res.text.find(AUTH_INVALID_MESSAGE) > -1:
-        sys.exit(AUTH_INVALID_MESSAGE)
+    __check_login_success(res.text)
     return res.text
 
 def __generate_project_info(html):
