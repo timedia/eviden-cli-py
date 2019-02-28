@@ -2,7 +2,7 @@ import json
 import os.path
 
 JSON_PATH = os.path.join('.', 'json')
-STATUS_PATH = os.path.join(JSON_PATH, 'state.json')
+STATUS_PATH = os.path.join(JSON_PATH, 'status.json')
 
 def write_json(data, path):
     json.dump(
