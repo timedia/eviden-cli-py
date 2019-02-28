@@ -42,7 +42,7 @@ def __generate_html_with_session(path):
         sys.exit(AUTH_INVALID_MESSAGE)
     return res.text
 
-def __genarate_project_info(html):
+def __generate_project_info(html):
     soup = BeautifulSoup(html, 'html.parser')
 
     TABLE_ID = "_ctl0_ContentPlaceHolder1_gridList"
@@ -56,7 +56,7 @@ def list_projects():
     PATH = "main/MyPage.aspx"
 
     html = __generate_html_with_session(PATH)
-    project_info = __genarate_project_info(html)
+    project_info = __generate_project_info(html)
 
     for (group, name) in project_info:
         print(f"{name}@{group}")
@@ -75,7 +75,7 @@ def __generate_selected_project_path(html, name):
     
     sys.exit("selected project does not exist")
 
-def __genarate_issues(html):
+def __generate_issues(html):
     soup = BeautifulSoup(html, 'html.parser')
 
     TABLE_ID = "_ctl0_ContentPlaceHolder1_gridList"
@@ -97,7 +97,7 @@ def select_project(name):
     write_json(status, STATUS_PATH)
 
     project_html = __generate_html_with_session(project_path)
-    issues = __genarate_issues(project_html)
+    issues = __generate_issues(project_html)
 
     for no, name, status_, priority, type_, category, asign in issues:
         print(f"No. {no}: {name}\nステータス: {status_}, 重要度: {priority}, タイプ: {type_}, アサイン: {asign}")
