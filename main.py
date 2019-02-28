@@ -84,7 +84,7 @@ def __generate_issues(html):
     TABLE_ID = "_ctl0_ContentPlaceHolder1_gridList"
     table = soup.find(attrs={"id": TABLE_ID})
     rows = table.find_all("tr")[2:-1]
-    issues = [list(map(lambda td: td.text, row.find_all("td"))) for row in rows]
+    issues = [list(map(lambda td: td.text, row.find_all("td")[:7])) for row in rows]
 
     return issues
 
@@ -119,7 +119,7 @@ if __name__=="__main__":
     # test
 
     # コマンドライン引数でtry-exceptするべき
-    command = "--issues" 
+    command = "--login" 
 
     # 引数のvalidationをしてから実行？
     if command == "--login":
