@@ -15,7 +15,6 @@ def login(user_id, password):
 
     status = read_json(STATUS_PATH)
     params = status["paramators"]["login"]
-    print(params)
     params["textBoxId"] = user_id
     params["textBoxPassword"] = password
 
@@ -81,7 +80,6 @@ def select_project(name):
     project_path = get_selected_project_path(mypage_html, name)
     project_html = get_html_with_session(project_path)
 
-    print(project_html)
     #soup = BeautifulSoup(project_html, 'html.parser')
 
 
