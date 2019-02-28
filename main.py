@@ -85,7 +85,6 @@ def __generate_issues(html):
 
     return issues
 
-
 def select_project(name):
     MYPAGE_PATH = "main/MyPage.aspx"
     mypage_html = __generate_html_with_session(MYPAGE_PATH)
@@ -102,11 +101,22 @@ def select_project(name):
     for no, name, status_, priority, type_, category, asign in issues:
         print(f"No. {no}: {name}\nステータス: {status_}, 重要度: {priority}, タイプ: {type_}, アサイン: {asign}")
 
+def list_issues():
+    status = read_json(STATUS_PATH) 
+    project_path = status["paramators"]["select"]["path"]
+
+    project_html = __generate_html_with_session(project_path)
+    issues = __generate_issues(project_html)
+
+    for no, name, status_, priority, type_, category, asign in issues:
+        print(f"No. {no}: {name}\nステータス: {status_}, 重要度: {priority}, タイプ: {type_}, アサイン: {asign}")
+
+
 if __name__=="__main__":
     # test
 
     # コマンドライン引数でtry-exceptするべき
-    command = "--select" 
+    command = "--issues" 
 
     # 引数のvalidationをしてから実行？
     if command == "--login":
@@ -117,3 +127,5 @@ if __name__=="__main__":
     elif command == "--select":
         name = "自動化テスト" # DEBUG
         select_project(name)
+    elif command == "--issues":
+        list_issues()
