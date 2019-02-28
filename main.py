@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import sys
 
 from jsonio import read_json, write_json, STATUS_PATH
-from setting import LoginData
+from datastore import login_data
 
 BASE_URL = "https://etrack.timedia.co.jp/EasyTracker/"
 session = requests.session()
@@ -14,14 +14,10 @@ def login(user_id, password):
     PATH = "Login.aspx"
 
     status = read_json(STATUS_PATH)
-    params = {
-        '__VIEWSTATE': status["paramators"]["login"]["__VIEWSTATE"],
-        '__VIEWSTATEGENERATOR': status["paramators"]["login"]["__VIEWSTATEGENERATOR"],
-        '__EVENTVALIDATION': status["paramators"]["login"]["__EVENTVALIDATION"],
-        'textBoxId': user_id,
-        'textBoxPassword': password,
-        'buttonLogin': 'ログイン'
-    }
+    params = status["paramators"]["login"]
+    print(params)
+    params["textBoxId"] = user_id
+    params["textBoxPassword"] = password
 
     res = session.post(BASE_URL+PATH, data=params)
     if res.text.find(AUTH_INVALID_MESSAGE) > -1:
@@ -73,8 +69,10 @@ def get_selected_project_path(html, name):
     table = soup.find(attrs={"id": TABLE_ID})
     rows = table.find_all("tr")[1:]
 
-    name_and_path = {row.find_all("td")[1].text: row.find_all("td")[1].a.get("href")[3:] for row in rows}
-    return name_and_path[name]
+    for row in rows:
+        project_name = row.find_all("td")[1] 
+        if project_name.text == name:
+            return project_name.a.get("href")[3:]
 
 def select_project(name):
     MYPAGE_PATH = "main/MyPage.aspx"
@@ -84,15 +82,18 @@ def select_project(name):
     project_html = get_html_with_session(project_path)
 
     print(project_html)
+    #soup = BeautifulSoup(project_html, 'html.parser')
+
 
 if __name__=="__main__":
+    # test
+
     # コマンドライン引数でtry-exceptするべき
-    command = "--select" # sys.argv[1]
+    command = "--select" 
 
     # 引数のvalidationをしてから実行？
     if command == "--login":
-        ld = LoginData()
-        userid, password = ld.user_id, ld.password # DEBUG
+        userid, password = login_data["user_id"], login_data["password"] # DEBUG
         login(userid, password)
     elif command == "--list":
         list_project()
