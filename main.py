@@ -30,8 +30,8 @@ def login(user_id, password):
     session_id = {"ASP.NET_SessionId": f"{cookie}"}
     status["session"] = session_id
 
-    status["login"]["userid"] = user_id
-    status["login"]["password"] = password
+    status["paramators"]["login"]["textBoxId"] = user_id
+    status["paramators"]["login"]["textBoxPassword"] = password
 
     write_json(status, STATUS_PATH)
 
@@ -119,7 +119,7 @@ if __name__=="__main__":
     # test
 
     # コマンドライン引数でtry-exceptするべき
-    command = "--login" 
+    command = sys.argv[1]
 
     # 引数のvalidationをしてから実行？
     if command == "--login":
