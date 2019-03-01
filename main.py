@@ -37,7 +37,7 @@ def login(user_id, password):
 
     print(f"ログインしました ID: {user_id}")
 
-def __generate_html_with_session(path):
+def  __get_with_session(path):
     status = read_json(STATUS_PATH)
     cookies = status["session"]
 
@@ -58,7 +58,7 @@ def __generate_project_info(html):
 def list_projects():
     PATH = "main/MyPage.aspx"
 
-    html = __generate_html_with_session(PATH)
+    html =  __get_with_session(PATH)
     project_info = __generate_project_info(html)
 
     for (group, name) in project_info:
@@ -90,7 +90,7 @@ def __generate_issues(html):
 
 def select_project(name):
     MYPAGE_PATH = "main/MyPage.aspx"
-    mypage_html = __generate_html_with_session(MYPAGE_PATH)
+    mypage_html =  __get_with_session(MYPAGE_PATH)
     project_path = __generate_selected_project_path(mypage_html, name)
 
     status = read_json(STATUS_PATH)
@@ -98,7 +98,7 @@ def select_project(name):
     status["paramators"]["select"]["path"] = project_path
     write_json(status, STATUS_PATH)
 
-    project_html = __generate_html_with_session(project_path)
+    project_html =  __get_with_session(project_path)
     issues = __generate_issues(project_html)
 
     for no, name, status_, priority, type_, category, asign in issues:
@@ -108,16 +108,25 @@ def list_issues():
     status = read_json(STATUS_PATH) 
     project_path = status["paramators"]["select"]["path"]
 
-    project_html = __generate_html_with_session(project_path)
+    project_html =  __get_with_session(project_path)
     issues = __generate_issues(project_html)
 
     for no, name, status_, priority, type_, category, asign in issues:
         print(f"No. {no}: {name}\nステータス: {status_}, 重要度: {priority}, タイプ: {type_}, アサイン: {asign}")
 
+def __post_data_and_files(url, data, files, cookies):
+    return requests.post(
+        url,
+        data=data,
+        files=files,
+        cookies=cookies
+    )
+
+def post_issue(board_id, status, priority, category, type, readonly, title, text, assign_id="", target_date="", remainder_mail=""):
+    path = f"Board/AddIssue.aspx?board_id={board_id}"
+    pass
 
 if __name__=="__main__":
-    # test
-
     # コマンドライン引数でtry-exceptするべき
     command = sys.argv[1]
 
