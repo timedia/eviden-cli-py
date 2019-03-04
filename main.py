@@ -158,7 +158,7 @@ def __generate_hidden_params(html):
     data = {s: soup.find("input", attrs={"name": s}).get("value") for s in HIDDEN_PARAMS}
     return data
 
-def post_issue(status, priority, category, type_, readonly, sercret_level, title, text, assign_id="", target_date="", remainder_mail=""):
+def post_issue(title, text, status="未着手", priority=1, category="デフォルト", type_="タスク", readonly="", sercret_level="on", assign_id="", target_date="", remainder_mail=""):
     # status.jsonからboard_idとクッキーを取得
     status_ = read_json(STATUS_PATH)
     board_id = status_["paramators"]["select"]["path"]
@@ -193,22 +193,23 @@ def post_issue(status, priority, category, type_, readonly, sercret_level, title
         files[param] = ("", "", "application/octet-stream")
 
     # POST
-    session.post(post_url, data=data, files=files, cookies=cookies)
+    res = session.post(post_url, data=data, files=files, cookies=cookies)
+    print(res.text)
 
 if __name__=="__main__":
     # コマンドライン引数でtry-exceptするべき
     command = sys.argv[1]
 
     # 引数のvalidationをしてから実行？
-    if command == "--login":
+    if command == "login":
         userid, password = login_data["user_id"], login_data["password"] # DEBUG
         login(userid, password)
-    elif command == "--list":
+    elif command == "list":
         list_projects()
-    elif command == "--select":
+    elif command == "select":
         name = "自動化テスト02" # DEBUG
         select_project(name)
-    elif command == "--issues":
+    elif command == "issues":
         list_issues()
-    elif command == "--post":
-        post_issue("未着手", "2", "デフォルト", "依頼", "on", "off", "main.pyへの組み込みテスト", "main.pyに実装したpost_issue関数の動作テスト")
+    elif command == "post":
+        post_issue("社外秘", "社外秘の動作テスト")
