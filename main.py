@@ -169,8 +169,7 @@ def post_issue(status, priority, category, type_, readonly, sercret_level, title
     post_url = BASE_URL + f"Board/AddIssue.aspx?board_id={board_id}"
 
     # Preページの__VIEWSTATEなどを取得する
-    pre_res = session.get(pre_url, cookies=cookies)
-    pre_html = pre_res.text
+    pre_html = __get_with_session(pre_url)
     __check_request_success(pre_html)
     data = __generate_hidden_params(pre_html)
 
