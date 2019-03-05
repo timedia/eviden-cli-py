@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup
 from itertools import zip_longest
 import sys
 
-from jsonio import STATUS_PATH, read_json, write_json
-from connection import get_with_session, post_with_session, authenticate
-from generator import (
+from src.jsonio import STATUS_PATH, read_json, write_json
+from src.connection import get_with_session, post_with_session, authenticate
+from src.generator import (
     generate_hidden_params, 
     generate_project_info,
     generate_issues,

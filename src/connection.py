@@ -1,7 +1,7 @@
 import requests
 import sys
 
-from jsonio import read_cookie, write_cookie
+from src.jsonio import read_cookie, write_cookie
 
 AUTH_INVALID_MESSAGE = "ログインID、メールアドレスもしくはパスワードが間違っています"
 AUTH_PROPARTY_EMPTY_MESSAGE = "ログインIDかメールアドレス、パスワードを入力してください"
