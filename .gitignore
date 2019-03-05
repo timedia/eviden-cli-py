@@ -1,3 +1,2 @@
 json/
-sample/
-/datastore.py
+/tests/datastore.py
