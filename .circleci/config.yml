@@ -12,5 +12,5 @@ jobs:
       - run:
           command: |
             sudo pip install pipenv
-            pipenv lock --pre
+            pipenv install
             pipenv run python -m unittest tests.test_generator
