@@ -11,9 +11,14 @@ HIDDEN_PARAMS = [
 __to_text = lambda td: td.text
 
 
-def generate_hidden_params(html):
+def generate_hidden_params(html, request="POST"):
     soup = BeautifulSoup(html, "html.parser")
-    data = {s: soup.find("input", attrs={"name": s}).get("value") for s in HIDDEN_PARAMS}
+    if request == "POST":
+        params = HIDDEN_PARAMS
+    elif request == "LOGIN":
+        params = HIDDEN_PARAMS[0:3]
+        params.append("buttonLogin")
+    data = {s: soup.find("input", attrs={"name": s}).get("value") for s in params}
     return data
 
 
@@ -54,5 +59,5 @@ def find_board_id(html, name):
         if project_name.text == name:
             return project_name.a.get("href").split("=")[1]
 
-    sys.exit("selected project does not exist")
+    sys.exit("その名前のプロジェクトは存在しません")
 

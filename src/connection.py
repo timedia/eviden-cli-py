@@ -1,7 +1,7 @@
 import requests
 import sys
 
-from src.jsonio import read_cookie, write_cookie
+from .jsonio import read_cookie, write_cookie
 
 AUTH_INVALID_MESSAGE = "ログインID、メールアドレスもしくはパスワードが間違っています"
 AUTH_PROPARTY_EMPTY_MESSAGE = "ログインIDかメールアドレス、パスワードを入力してください"
@@ -22,6 +22,11 @@ def get_with_session(url):
     cookies = read_cookie()
     res = session.get(url, cookies=cookies)
     check_request_success(res.text)
+    return res.text
+
+
+def get(url):
+    res = session.get(url)
     return res.text
 
 

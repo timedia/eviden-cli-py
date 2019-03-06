@@ -2,9 +2,9 @@ from bs4 import BeautifulSoup
 from itertools import zip_longest
 import sys
 
-from src.jsonio import STATUS_PATH, read_json, write_json
-from src.connection import get_with_session, post_with_session, authenticate
-from src.generator import (
+from .jsonio import STATUS_PATH, read_json, write_json
+from .connection import get, get_with_session, post_with_session, authenticate
+from .generator import (
     generate_hidden_params, 
     generate_project_info,
     generate_issues,
@@ -37,6 +37,12 @@ POST_FILE_PARAMS = [
     "_ctl0:ContentPlaceHolder1:attach_filename5",
 ]
 
+def __board_id_validation(html):
+    INVALID_MESSAGE = "指定されたプロジェクトは存在しません"
+    if html.find(INVALID_MESSAGE) > -1:
+        print(INVALID_MESSAGE)
+        sys.exit("プロジェクトを指定し直してください")
+
 def setup():
     data = {
         'paramators': {
@@ -47,15 +53,14 @@ def setup():
         }
     }
     write_json(data, STATUS_PATH)
-    
 
 
 def login(user_id, password):
     URL = BASE_URL + "Login.aspx"
 
-    html = get_with_session(URL)
+    html = get(URL)
 
-    data = generate_hidden_params(html)
+    data = generate_hidden_params(html, request="LOGIN")
     data["textBoxId"] = user_id
     data["textBoxPassword"] = password
 
@@ -96,6 +101,8 @@ def list_issues(board_id=None):
     URL = BASE_URL + f"board/IssueList.aspx?board_id={board_id}"
 
     html = get_with_session(URL)
+    __board_id_validation(html)
+
     issues = generate_issues(html)
 
     for no, name, status_, priority, type_, category, asign in issues:
@@ -126,6 +133,7 @@ def post_issue(title, text, status="未着手", priority=1, category="デフォ�
     PRE_URL = BASE_URL + f"Board/AddIssuePre.aspx?board_id={board_id}"
 
     pre_html = get_with_session(PRE_URL)
+    __board_id_validation(pre_html)
     data = generate_hidden_params(pre_html)
 
     pre_post_data = [status, priority, category, type_, readonly, secret]
