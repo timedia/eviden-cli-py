@@ -3,13 +3,12 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.7
-      environment:
-        PIPENV_VENV_IN_PROJECT: true
-        DATABASE_URL: 
-      steps:
-        - checkout
-        - run:
-          command: |
-            sudo pip install pipenv
-            pipenv lock --pre
-            pipenv run python -m unittest tests.test_generator
+    environment:
+      PIPENV_VENV_IN_PROJECT: true
+    steps:
+      - checkout
+      - run:
+        command: |
+          sudo pip install pipenv
+          pipenv lock --pre
+          pipenv run python -m unittest tests.test_generator
