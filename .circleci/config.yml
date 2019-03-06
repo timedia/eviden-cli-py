@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.6.7
+    steps:
+      - checkout
+      - pip install pipenv
+      - pipenv run python -m unittest tests.test_generator

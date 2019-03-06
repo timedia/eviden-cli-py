@@ -13,7 +13,7 @@ __to_text = lambda td: td.text
 
 def generate_hidden_params(html):
     soup = BeautifulSoup(html, "html.parser")
-    data = {s: soup.find(name=s).get("value") for s in HIDDEN_PARAMS}
+    data = {s: soup.find("input", attrs={"name": s}).get("value") for s in HIDDEN_PARAMS}
     return data
 
 
@@ -21,7 +21,7 @@ def generate_project_info(html):
     soup = BeautifulSoup(html, "html.parser")
 
     TABLE_ID = "_ctl0_ContentPlaceHolder1_gridList"
-    table = soup.find(id=TABLE_ID)
+    table = soup.find(attrs={"id": TABLE_ID})
 
     rows = table.find_all("tr")[1:]
     project_info = [list(map(__to_text, row.find_all("td")[:2])) for row in rows]
@@ -34,7 +34,9 @@ def generate_issues(html):
 
     TABLE_ID = "_ctl0_ContentPlaceHolder1_gridList"
     table = soup.find(attrs={"id": TABLE_ID})
+
     rows = table.find_all("tr")[2:-1]
+
     issues = [list(map(__to_text, row.find_all("td")[:7])) for row in rows]
 
     return issues
