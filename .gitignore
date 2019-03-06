@@ -1,3 +1,2 @@
-json/*
-
-/setting.py
+json/
+/tests/datastore.py
