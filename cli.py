@@ -1,6 +1,6 @@
 import argparse, sys
 from src import core
-
+from getpass import getpass
 
 class Validator:
     NOT_REQUIRED_ARGUMENTS_MESSAGE = "不必要な引数が指定されています！"
@@ -70,8 +70,7 @@ if __name__ == "__main__":
             core.list_issues()
     elif args.command == "login":
         user_id = validator.login_validation()
-        print("passwordを入力してください: ", end="")
-        password = input()
+        password = getpass("passwordを入力してください:")
         core.login(user_id, password)
     elif args.command == "select":
         name = validator.select_project_validation()
