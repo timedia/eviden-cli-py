@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from itertools import zip_longest
 import sys
+import os
 
 from .jsonio import STATUS_PATH, read_json, write_json
 from .connection import get, get_with_session, post_with_session, authenticate
@@ -52,6 +53,7 @@ def setup():
             'ASP.NET_SessionId': 'initialized'
         }
     }
+    os.makedirs(os.path.dirname(STATUS_PATH), exist_ok=True)
     write_json(data, STATUS_PATH)
 
 
