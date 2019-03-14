@@ -2,7 +2,7 @@ import random
 import string
 import unittest
 
-from src.generator import (
+from eviden.generator import (
     generate_hidden_params,
     generate_issues,
     generate_project_info,

@@ -1,6 +1,6 @@
 import argparse
 import sys
-from src import core
+from . import core
 from getpass import getpass
 
 

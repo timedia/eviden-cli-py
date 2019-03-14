@@ -10,8 +10,8 @@ Pythonによるtim社内ツールEvidenのCLIラッパーツールです
 # 最初にこのリポジトリのcloneをしておく
 $ pipenv install
 （略）
-$ pipenv run python cli.py setup
-$ pipenv run python cli.py <command>
+$ pipenv run python -m eviden setup
+$ pipenv run python -m eviden <command>
 ```
 ## commands
 ### setup
