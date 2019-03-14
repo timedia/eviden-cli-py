@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/timedia/eviden-cli-py/tree/master.svg?style=svg)](https://circleci.com/gh/timedia/eviden-cli-py/tree/master)
+
 # eviden-cli-py
 Pythonによるtim社内ツールEvidenのCLIラッパーツールです
 ## dependency
