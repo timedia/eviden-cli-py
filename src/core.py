@@ -1,4 +1,3 @@
-from bs4 import BeautifulSoup
 from itertools import zip_longest
 import sys
 import os
@@ -6,7 +5,7 @@ import os
 from .jsonio import STATUS_PATH, read_json, write_json
 from .connection import get, get_with_session, post_with_session, authenticate
 from .generator import (
-    generate_hidden_params, 
+    generate_hidden_params,
     generate_project_info,
     generate_issues,
     find_board_id
@@ -38,11 +37,13 @@ POST_FILE_PARAMS = [
     "_ctl0:ContentPlaceHolder1:attach_filename5",
 ]
 
+
 def __board_id_validation(html):
     INVALID_MESSAGE = "指定されたプロジェクトは存在しません"
     if html.find(INVALID_MESSAGE) > -1:
         print(INVALID_MESSAGE)
         sys.exit("プロジェクトを指定し直してください")
+
 
 def setup():
     data = {
@@ -112,7 +113,7 @@ def list_issues(board_id=None):
 
 
 def post_issue(title, text, status="未着手", priority=1, category="デフォルト",
-    type_="タスク", readonly="", secret="on", assign_id="", date="", remainder_mail=""):
+               type_="タスク", readonly="", secret="on", assign_id="", date="", remainder_mail=""):
     """
     argments:
 
@@ -124,7 +125,7 @@ def post_issue(title, text, status="未着手", priority=1, category="デフォ�
     type_: str -> issue's type ["タスク", "依頼", "バグ", "議事録", "連絡", "文書", "議論"]
     readonly: str -> commentable? {"on": False, "*": True}
     secret: str -> visiable for guest account? {"on": False, "*": True}
-    assign_id: str -> assigned account's id 
+    assign_id: str -> assigned account's id
     date: str -> issue's limit
     remainder_mail: str -> notificate by email to team membaers
     """

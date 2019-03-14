@@ -9,6 +9,7 @@ AUTH_SESSION_DISCONNECT_MESSAGE = "セッション切れです"
 
 session = requests.session()
 
+
 def check_request_success(html):
     if (
         html.find(AUTH_INVALID_MESSAGE) > -1

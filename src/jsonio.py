@@ -4,6 +4,7 @@ import os.path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STATUS_PATH = os.path.join(PROJECT_ROOT, 'json', 'status.json')
 
+
 def write_json(data, path):
     o = open(path, 'w')
     json.dump(
