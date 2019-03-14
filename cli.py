@@ -1,6 +1,8 @@
-import argparse, sys
+import argparse
+import sys
 from src import core
 from getpass import getpass
+
 
 class Validator:
     NOT_REQUIRED_ARGUMENTS_MESSAGE = "不必要な引数が指定されています！"
@@ -36,7 +38,7 @@ class Validator:
 
     def post_issue_validation(self):
         if len(self.option) > 2:
-            print(self.NOT_REQUIRED_ARGUMENTS_MESSAGE) 
+            print(self.NOT_REQUIRED_ARGUMENTS_MESSAGE)
 
         try:
             title, text = self.option[0:2]

@@ -8,7 +8,9 @@ HIDDEN_PARAMS = [
     "_ctl0:ContentPlaceHolder1:buttonAdd",
 ]
 
-__to_text = lambda td: td.text
+
+def __to_text(td):
+    return td.text
 
 
 def generate_hidden_params(html, request="POST"):
@@ -60,4 +62,3 @@ def find_board_id(html, name):
             return project_name.a.get("href").split("=")[1]
 
     sys.exit("その名前のプロジェクトは存在しません")
-

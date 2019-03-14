@@ -10,10 +10,12 @@ from src.generator import (
     HIDDEN_PARAMS
 )
 
+
 def randomstr(b):
     n = random.randint(1, b)
     randlst = [random.choice(string.ascii_letters + string.digits) for i in range(n)]
     return ''.join(randlst)
+
 
 generate_hidden_params_html = """
 <html>
@@ -113,13 +115,14 @@ find_board_id_td_html = """
 </tr>
 """
 
+
 class GeneratorTest(unittest.TestCase):
     def test_generate_hidden_params(self):
         rs0 = randomstr(50)
         rs1 = randomstr(60)
         rs2 = randomstr(70)
         rs3 = randomstr(80)
-        
+
         html = generate_hidden_params_html.format(
             HIDDEN_PARAMS[0], rs0,
             HIDDEN_PARAMS[1], rs1,
@@ -172,5 +175,6 @@ class GeneratorTest(unittest.TestCase):
 
         self.assertEqual(data, board_id)
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     unittest.main()
