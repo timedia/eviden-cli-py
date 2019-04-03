@@ -5,13 +5,13 @@ jobs:
       - image: circleci/python:3.7.2
     steps:
       - checkout
-      - run: pip install tox && tox -e py37
+      - run: sudo pip install tox && tox -e py37
   flake8:
     docker:
       - image: circleci/python:3.7.2
     steps:
       - checkout
-      - run: pip install tox && tox -e flake8
+      - run: sudo pip install tox && tox -e flake8
 workflows:
   version: 2
   test:
