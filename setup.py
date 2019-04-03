@@ -1,0 +1,18 @@
+from setuptools import find_packages, setup
+
+
+setup(
+    name='eviden',
+    version='1.0',
+    packages=find_packages(exclude=['tests']),
+    entry_points={
+        'console_scripts': [
+            'eviden = eviden.__main__:main',
+        ]
+    },
+    install_requires=[
+        'bs4',
+        'requests',
+    ],
+    python_requires=">= 3.7",
+)
