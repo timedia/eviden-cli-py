@@ -1,17 +1,14 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       - image: circleci/python:3.7.2
-        environment:
-          PIPENV_VENV_IN_PROJECT: true
     steps:
       - checkout
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
-      - run:
-          command: |
-            sudo pip install pipenv
-            pipenv install --dev
-            pipenv run python -m unittest tests.test_generator
-            pipenv run flake8 cli.py src/ tests/
+      - run: pip install tox && tox -e py37
+  flake8:
+    docker:
+      - image: circleci/python:3.7.2
+    steps:
+      - checkout
+      - run: pip install tox && tox -e flake8

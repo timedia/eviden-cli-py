@@ -14,5 +14,11 @@ setup(
         'bs4',
         'requests',
     ],
+    extras_require={
+        'test': [
+            'flake8',
+            'pytest',
+        ],
+    },
     python_requires=">= 3.7",
 )
