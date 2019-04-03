@@ -15,5 +15,6 @@ jobs:
 workflows:
   version: 2
   test:
-    - test
-    - flake8
+    jobs:
+      - test
+      - flake8
