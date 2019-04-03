@@ -169,7 +169,7 @@ class GeneratorTest(unittest.TestCase):
 
         html = find_board_id_html.format("".join(rows))
 
-        M = random.randint(1, N)
+        M = random.randint(0, N - 1)
         _, board_id, name = pares[M]
         data = find_board_id(html, name)
 
