@@ -12,3 +12,8 @@ jobs:
     steps:
       - checkout
       - run: pip install tox && tox -e flake8
+workflows:
+  versions: 2
+  test:
+    - test
+    - flake8
