@@ -1,8 +1,10 @@
+*.egg-info
 *.pyc
 *.swp
 __pycache__
 
 /.mypy_cache
+/.tox
 /bin
 /build
 /dist

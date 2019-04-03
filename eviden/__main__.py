@@ -48,7 +48,7 @@ class Validator:
         return (title, text)
 
 
-if __name__ == "__main__":
+def main():
     command_parser = argparse.ArgumentParser(add_help=False)
     command_parser.add_argument(
         "command",
@@ -80,3 +80,7 @@ if __name__ == "__main__":
     elif args.command == "post":
         title, text = validator.post_issue_validation()
         core.post_issue(title, text)
+
+
+if __name__ == "__main__":
+    main()
